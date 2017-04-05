@@ -148,6 +148,7 @@ public class MemorialInfoActivity extends AppCompatActivity {
     public void setImage(String image) {
         if(image!=null){
             Picasso.with(this).load(image)
+                    .resize(300,300)
                     .into(binding.backdrop);
         }
     }
