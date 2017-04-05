@@ -41,6 +41,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements MainPresenterContract.View {
 
+    private static final String SEARCH_STRING = "search_string";
     @Inject
     MainPresenter mainPresenter;
 
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
     MarkerOptions mMarkerOption;
 
     ActivityMainBinding binding;
+
+    String searchString = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(mMap!=null){
+                    searchString = query;
                     mainPresenter.load(query);
                 }
                 return false;
@@ -123,9 +127,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
     }
 
     private void restoreUI(Bundle savedInstanceState) {
-        String mStoredValue = savedInstanceState.getString("Adarsh");
-        if (mStoredValue != null) {
-            //Log.i("Dude",mStoredValue);
+        searchString = savedInstanceState.getString(SEARCH_STRING);
+        if (searchString != null) {
+            if(mMap!=null){
+                mainPresenter.load(searchString);
+            }
         } else {
             //Log.i("Dude","null");
         }
@@ -133,8 +139,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        if(searchString!=null) {
+            outState.putString(SEARCH_STRING, searchString);
+        }
         super.onSaveInstanceState(outState);
-        //outState.putString("Adarsh","Iam Adarsh");
     }
 
     private void initMap() {
@@ -149,8 +157,13 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
                 //addListeners();
-                mainPresenter.load("mead");
+               // mainPresenter.load("mead");
                 //binding.searchEditText.setText("mead");
+                if (searchString != null) {
+                    if(mMap!=null){
+                        mainPresenter.load(searchString);
+                    }
+                }
             }
         });
     }
@@ -218,10 +231,14 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
         for (Marker marker : mMarkers) {
             builder.include(marker.getPosition());
         }
-        LatLngBounds bounds = builder.build();
-        int padding = 50; // offset from edges of the map in pixels
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        mMap.animateCamera(cu);
+
+        if(mMarkers.size()>0){
+            LatLngBounds bounds = builder.build();
+            int padding = 50; // offset from edges of the map in pixels
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+            mMap.animateCamera(cu);
+        }
+
 
     }
 
