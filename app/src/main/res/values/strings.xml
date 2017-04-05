@@ -10,4 +10,5 @@
     <string name="cemetery_name">Cemetery Name</string>
     <string name="county">County Name</string>
     <string name="unknown">Unknown</string>
+    <string name="search">Search</string>
 </resources>

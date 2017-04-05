@@ -40,9 +40,9 @@ public class MainPresenter implements MainPresenterContract.Presenter, MainPrese
 
 
     @Override
-    public void load() {
+    public void load(String mName) {
         if(mMainView!=null){
-            model.loadUserDetails();
+            model.loadUserDetails(mName);
         }else{
             Log.i("Adarsh","mMainView is null");
         }
@@ -82,7 +82,7 @@ public class MainPresenter implements MainPresenterContract.Presenter, MainPrese
     public void onResultLoad(List<Cemetery> cemeteryList) {
         if(mMainView!=null){
             Log.i("Adarsh","I am here1 dude");
-            if(cemeteryList.size()==0){
+            if(cemeteryList==null || cemeteryList.size()==0){
                 mMainView.showEmptyResultsView();
             }else{
                 mMainView.clearResults();
@@ -96,14 +96,14 @@ public class MainPresenter implements MainPresenterContract.Presenter, MainPrese
     @Override
     public void onErrorLoad(String mErrorMessage) {
         if(mMainView!=null){
-            mMainView.showContentError();
+            mMainView.showEmptyResultsView();
         }
     }
 
     @Override
     public void onErrorLoadMore(String mErrorMessage) {
         if(mMainView!=null){
-            mMainView.showContentError();
+            mMainView.showEmptyResultsView();
         }
     }
 }

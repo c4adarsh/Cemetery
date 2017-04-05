@@ -26,7 +26,7 @@ public class MainPresenterContract {
         void hideEmptyResultsView();
     }
     public interface Presenter extends BasePresenterInterface<View> {
-        void load();
+        void load(String mName);
         void loadMore();
         void queryChanged(String query);
         void listItemClicked(Cemetery cemetery);

@@ -2,5 +2,6 @@
 <resources>
     <dimen name="text_large">28sp</dimen>
     <dimen name="text_medium">22sp</dimen>
+    <dimen name="text_twenty">20sp</dimen>
     <dimen name="text_small">18sp</dimen>
 </resources>

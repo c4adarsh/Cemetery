@@ -42,9 +42,8 @@ public class CemeteryDataModel implements MainPresenterContract.Model {
         mResponseCallBack = null;
     }
 
-    public void loadUserDetails(){
-        Log.i("Adarsh","Reached here in loadUserDetails");
-        Observable<CemeteryList> observable = mRetrofit.create(GetCemeteryService.class).getCemeteryList();
+    public void loadUserDetails(String mName){
+        Observable<CemeteryList> observable = mRetrofit.create(GetCemeteryService.class).getCemeteryList(mName);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

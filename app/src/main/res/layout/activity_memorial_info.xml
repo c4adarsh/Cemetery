@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/first_name"
-                android:textSize="@dimen/text_medium"
+                android:textSize="@dimen/text_twenty"
                 android:textColor="@android:color/black"/>
 
             <TextView
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/last_name"
-                android:textSize="@dimen/text_medium"
+                android:textSize="@dimen/text_twenty"
                 android:textColor="@android:color/black"/>
 
             <TextView
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/middle_name"
-                android:textSize="@dimen/text_medium"
+                android:textSize="@dimen/text_twenty"
                 android:textColor="@android:color/black"/>
 
             <TextView
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/birth_date"
-                android:textSize="@dimen/text_medium"
+                android:textSize="@dimen/text_twenty"
                 android:textColor="@android:color/black"/>
 
             <TextView
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/death_date"
-                android:textSize="@dimen/text_medium"
+                android:textSize="@dimen/text_twenty"
                 android:textColor="@android:color/black"/>
 
             <TextView
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/cemetery_name"
-                android:textSize="@dimen/text_medium"
+                android:textSize="@dimen/text_twenty"
                 android:textColor="@android:color/black"/>
 
             <TextView
@@ -189,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:text="@string/county"
-                android:textSize="@dimen/text_medium"
+                android:textSize="@dimen/text_twenty"
                 android:textColor="@android:color/black"/>
 
             <TextView

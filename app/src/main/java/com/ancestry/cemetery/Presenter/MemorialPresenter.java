@@ -1,6 +1,7 @@
 package com.ancestry.cemetery.Presenter;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.ancestry.cemetery.Contract.MainPresenterContract;
 import com.ancestry.cemetery.Contract.MemorialPresenterContract;
@@ -8,6 +9,7 @@ import com.ancestry.cemetery.Model.CemeteryDataModel;
 import com.ancestry.cemetery.Model.MemorialDataModel;
 import com.ancestry.cemetery.Presenter.Model.Cemetery;
 import com.ancestry.cemetery.Presenter.Model.Memorial;
+import com.ancestry.cemetery.View.Activity.MainActivity;
 
 import java.util.List;
 
@@ -102,7 +104,8 @@ public class MemorialPresenter implements MemorialPresenterContract.Presenter, M
                 mMainView.addResults(memorialList);
             }
         } else {
-            Log.d("MemorialPresenter", "onResultLoad is null");
+            Log.d("MemorialPresnter", "onResultLoad is null");
+            mMainView.showEmptyResultsView();
         }
     }
 

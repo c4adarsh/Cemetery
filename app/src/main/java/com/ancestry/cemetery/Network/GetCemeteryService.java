@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface GetCemeteryService {
 
-    @GET("api.cgi?mode=cemetery&cemeteryName=mead&limit=25&skip=0")
-    Observable<CemeteryList> getCemeteryList();
+    @GET("api.cgi?mode=cemetery&limit=25&skip=0")
+    Observable<CemeteryList> getCemeteryList(@Query("cemeteryName") String cemeteryName);
 
 }

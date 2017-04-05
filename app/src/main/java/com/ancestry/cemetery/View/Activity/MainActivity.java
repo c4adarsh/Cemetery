@@ -7,7 +7,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.ancestry.cemetery.CemeteryApplication;
@@ -20,7 +23,6 @@ import com.ancestry.cemetery.Presenter.Model.Cemetery;
 import com.ancestry.cemetery.R;
 import com.ancestry.cemetery.Utils.Constants;
 import com.ancestry.cemetery.databinding.ActivityMainBinding;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,7 +39,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class MainActivity extends AppCompatActivity implements MainPresenterContract.View{
+public class MainActivity extends AppCompatActivity implements MainPresenterContract.View {
 
     @Inject
     MainPresenter mainPresenter;
@@ -50,11 +52,13 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
 
     private static final String TAG = "MainActivity";
 
-   //GoogleApiClient mGoogleApiClient;
+    //GoogleApiClient mGoogleApiClient;
 
-    List<Marker> mMarkers = new ArrayList<Marker>();;
+    List<Marker> mMarkers = new ArrayList<Marker>();
 
     MarkerOptions mMarkerOption;
+
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,23 +66,23 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
 
         mMainActivityComponent = DaggerMainActivityComponent.builder()
                 .mainActivityModule(new MainActivityModule())
-                .netComponent(((CemeteryApplication)getApplicationContext()).getNetComponent())
+                .netComponent(((CemeteryApplication) getApplicationContext()).getNetComponent())
                 .build();
         mMainActivityComponent.inject(this);
 
         attachPresenterCallBack();
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         setUpToolBar();
 
         initMap();
 
-        if(savedInstanceState!=null){
+        if (savedInstanceState != null) {
             restoreUI(savedInstanceState);
         }
     }
 
     private void attachPresenterCallBack() {
-        if(mainPresenter!=null){
+        if (mainPresenter != null) {
             mainPresenter.attach(this);
         }
     }
@@ -93,11 +97,36 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
         getSupportActionBar().setTitle("  " + getString(R.string.app_name));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main,menu);
+        MenuItem item = menu.findItem(R.id.search);
+        SearchView mSearchView = (SearchView)item.getActionView();
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(mMap!=null){
+                    mainPresenter.load(query);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
     private void restoreUI(Bundle savedInstanceState) {
         String mStoredValue = savedInstanceState.getString("Adarsh");
-        if(mStoredValue!=null){
+        if (mStoredValue != null) {
             //Log.i("Dude",mStoredValue);
-        }else{
+        } else {
             //Log.i("Dude","null");
         }
     }
@@ -109,17 +138,19 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
     }
 
     private void initMap() {
-        SupportMapFragment mSupportMapFragment = (SupportMapFragment)getSupportFragmentManager().
+        SupportMapFragment mSupportMapFragment = (SupportMapFragment) getSupportFragmentManager().
                 findFragmentById(R.id.map);
-        if(mSupportMapFragment==null){
-            Toast.makeText(this,"mSupportMapFragment is null",Toast.LENGTH_LONG).show();
+        if (mSupportMapFragment == null) {
+            Toast.makeText(this, "mSupportMapFragment is null", Toast.LENGTH_LONG).show();
             return;
         }
         mSupportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
-                mainPresenter.load();
+                //addListeners();
+                mainPresenter.load("mead");
+                //binding.searchEditText.setText("mead");
             }
         });
     }
@@ -136,10 +167,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
 
     @Override
     public void addResults(List<Cemetery> mCemeteryList) {
-
-        for(Cemetery cementry : mCemeteryList){
-            if(cementry.getLatitude()!=null && cementry.getLongitude()!=null &&
-                    cementry.getLongitude().length()!=0 && cementry.getLatitude().length()!=0){
+        clearResults();
+        for (Cemetery cementry : mCemeteryList) {
+            if (cementry.getLatitude() != null && cementry.getLongitude() != null &&
+                    cementry.getLongitude().length() != 0 && cementry.getLatitude().length() != 0) {
 
                 LatLng mLocation = new LatLng(Double.valueOf(cementry.getLatitude()),
                         Double.valueOf(cementry.getLongitude()));
@@ -148,10 +179,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
 
                 String city = "";
 
-                if(cementry.getCityName()!=null && cementry.getCityName().length()>0){
+                if (cementry.getCityName() != null && cementry.getCityName().length() > 0) {
                     city = cementry.getCityName();
-                }else{
-                    if(cementry.getStateName()!=null){
+                } else {
+                    if (cementry.getStateName() != null) {
                         city = cementry.getStateName();
                     }
                 }
@@ -159,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
                 markerOptions.position(mLocation)
                         .title(city);
 
-                if(cementry.getCountryName()!=null && cementry.getCountryName().length()>0){
+                if (cementry.getCountryName() != null && cementry.getCountryName().length() > 0) {
                     markerOptions.snippet(cementry.getCountryName());
                 }
 
@@ -174,8 +205,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         String tag = String.valueOf(marker.getTag());
-                        Intent mIntent = new Intent(MainActivity.this,MemorialActivity.class);
-                        mIntent.putExtra(Constants.ID,tag);
+                        Intent mIntent = new Intent(MainActivity.this, MemorialActivity.class);
+                        mIntent.putExtra(Constants.ID, tag);
                         startActivity(mIntent);
                         return false;
                     }
@@ -196,7 +227,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
 
     @Override
     public void clearResults() {
-
+    //remove all the markers from google map
+        mMarkers.clear();
+        if(mMap!=null){
+            mMap.clear();
+        }
     }
 
     @Override
@@ -236,7 +271,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenterCont
 
     @Override
     public void showEmptyResultsView() {
-
+        clearResults();
+        Toast.makeText(MainActivity.this, "No Cemeteries Found", Toast.LENGTH_SHORT).show();
     }
 
     @Override
