@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Cemetery</string>
+    <string name="memorials">Memorials</string>
+    <string name="memorials_info">MemorialInfo</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="death_date">Death Date</string>
+    <string name="cemetery_name">Cemetery Name</string>
+    <string name="county">County Name</string>
+    <string name="unknown">Unknown</string>
+</resources>
