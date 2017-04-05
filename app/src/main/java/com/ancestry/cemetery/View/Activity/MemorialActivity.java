@@ -178,15 +178,6 @@ public class MemorialActivity extends AppCompatActivity implements MemorialPrese
     @Override
     public void showCemeterySummary(Cemetery mCemetery)
     {
-        /*if(mCemetery.getCemeteryName()!=null){
-            binding.cemeteryName.setText(mCemetery.getCemeteryName());
-        }*/
-
-        /*if(mCemetery.getStateName()!=null && mCemetery.getStateName().length()!=0){
-            binding.cemeteryCountry.setText(mCemetery.getStateName());
-        }else if(mCemetery.getCountryName()!=null && mCemetery.getCountryName().length()!=0){
-            binding.cemeteryCountry.setText(mCemetery.getCountryName());
-        }*/
-       // Log.i("Adarsh","In Cemetery Summary");
+       //TODO
     }
 }

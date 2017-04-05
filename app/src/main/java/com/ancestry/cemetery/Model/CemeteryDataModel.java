@@ -61,7 +61,6 @@ public class CemeteryDataModel implements MainPresenterContract.Model {
                     @Override
                     public void onError(Throwable e) {
                         mResponseCallBack.onErrorLoad(e.getMessage());
-                        Log.i("Adarsh","Reached here in error");
                     }
 
                     @Override

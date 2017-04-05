@@ -33,6 +33,8 @@ import static com.ancestry.cemetery.Utils.Constants.MEMORIAL_ITEM;
 
 /**
  * Created by adarsh on 4/5/2017.
+ *
+ * Refactoring must be done of this complete activity. This doesn't follow MVP Pattern
  */
 
 public class MemorialInfoActivity extends AppCompatActivity {

@@ -21,6 +21,8 @@ public class MainPresenter implements MainPresenterContract.Presenter, MainPrese
 
     CemeteryDataModel model;
 
+    private static final String TAG = "MainPresenter";
+
 
     @Inject
     public MainPresenter(CemeteryDataModel pDataModel) {
@@ -44,7 +46,7 @@ public class MainPresenter implements MainPresenterContract.Presenter, MainPrese
         if(mMainView!=null){
             model.loadUserDetails(mName);
         }else{
-            Log.i("Adarsh","mMainView is null");
+            Log.i("TAG","mMainView is null");
         }
     }
 
@@ -81,7 +83,6 @@ public class MainPresenter implements MainPresenterContract.Presenter, MainPrese
     @Override
     public void onResultLoad(List<Cemetery> cemeteryList) {
         if(mMainView!=null){
-            Log.i("Adarsh","I am here1 dude");
             if(cemeteryList==null || cemeteryList.size()==0){
                 mMainView.showEmptyResultsView();
             }else{
@@ -89,7 +90,7 @@ public class MainPresenter implements MainPresenterContract.Presenter, MainPrese
                 mMainView.addResults(cemeteryList);
             }
         }else{
-            Log.i("Adarsh","I am here dude");
+            Log.i("TAG","mMainView in onResultLoad is null ");
         }
     }
 
